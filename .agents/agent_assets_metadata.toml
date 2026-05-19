@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "Onazu8zaVspnIqesG2VRw"
+uri = "file://frontend/public/images/hero-dashboard.png"
+type = "image"
+title = "eic hero dashboard"
+
+[[generated]]
+id = "uNC8F5HjOmova5n2_g8e9"
+uri = "file://frontend/public/images/modules-network.png"
+type = "image"
+title = "eic modules network"
+
+[[generated]]
+id = "lwmxDUBu3wrJNUfGHLvYW"
+uri = "file://frontend/public/images/payments-preview.png"
+type = "image"
+title = "eic payments fintech"

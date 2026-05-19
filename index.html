@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EIC Enterprise - Elite Operations Intelligence</title>
+  <style>
+    :root {
+      --bg: #0b0b0e;
+      --surface: rgba(20, 20, 28, 0.65);
+      --surface-strong: rgba(20, 20, 28, 0.80);
+      --white: #edf0f5;
+      --grey: #b3b8c6;
+      --light-grey: #d6d8de;
+      --accent: #7ce7ff;
+      --accent-strong: #1d80ff;
+      --text: #f6f6f8;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; scroll-behavior: smooth; background: radial-gradient(circle at 20% 20%, #23242b 0%, #0b0b0e 45%, #050509 100%); color: var(--text); font-family: 'Inter', 'Segoe UI', sans-serif; }
+    .float-bg { position: fixed; width: 100%; height: 100%; pointer-events: none; inset: 0; z-index: 0; background: radial-gradient(circle at 10% 10%, rgba(124,231,255,.16), transparent 25%), radial-gradient(circle at 90% 20%, rgba(177,135,255,.14), transparent 30%), repeating-linear-gradient(65deg, rgba(255,255,255,.02), rgba(255,255,255,.02) 2px, transparent 2px, transparent 20px); mix-blend-mode: overlay; animation: floatBG 20s linear infinite; }
+
+    @keyframes floatBG { 0% { transform: translate3d(0,0,0); } 50% { transform: translate3d(10px,-12px,0); } 100% { transform: translate3d(0,0,0); } }
+
+    .container { width: min(1200px, calc(100% - 2rem)); margin: auto; position: relative; z-index: 2; }
+    .glass { background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); backdrop-filter: blur(12px); box-shadow: var(--shadow); }
+    .glass-strong { background: var(--surface-strong); }
+    .hero { min-height: 96vh; display: grid; place-items: center; position: relative; overflow: hidden; padding: 4rem 1rem 6rem; }
+    .hero::before { content: ''; position: absolute; inset: 0; opacity: 0.16; background: linear-gradient(45deg, #2f7ecf, #164477, #0e111e); filter: blur(30px); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; width: min(940px, 100%); display: grid; gap: 1.5rem; animation: fadeScale 0.85s ease-out forwards; opacity: 0; transform: translateY(15px); }
+    @keyframes fadeScale { 100% { opacity: 1; transform: translateY(0); } }
+    .hero h1 { font-size: clamp(2rem, 5.5vw, 4.1rem); margin: 0; line-height: 1.05; max-width: 870px; }
+    .hero p { color: var(--grey); font-size: clamp(1rem, 2.2vw, 1.4rem); max-width: 720px; margin-top: 0.8rem; }
+    .cta-group { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.4rem; }
+    .btn { border: 0; border-radius: 999px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.85rem 1.5rem; cursor: pointer; transition: all 190ms ease; }
+    .primary { background: linear-gradient(120deg, var(--accent), var(--accent-strong)); color: #0b0b0e; box-shadow: 0 12px 26px rgba(26, 150, 255, 0.4); }
+    .secondary { background: rgba(255,255,255,.08); color: var(--white); border: 1px solid rgba(124, 231, 255, 0.45); }
+    .btn:hover { transform: translateY(-2px) scale(1.01); }
+
+    .trust-band { margin-top: 1.5rem; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(10px); border-radius: 14px; padding: 0.8rem 1.25rem; display: flex; align-items: center; justify-content: space-between; color: var(--light-grey); font-weight: 500; gap: 1rem; }
+    .logo-grid { display:grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap:1rem; opacity:.85; }
+    .logo-grid span { font-size: 0.8rem; text-transform: uppercase; letter-spacing:0.10em; opacity:.8; }
+
+    section { padding: 6rem 0; position: relative; }
+    .section-title { font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-bottom: 0.45rem; }
+    .subtext { color: var(--grey); max-width: 760px; line-height: 1.7; }
+
+    .metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
+    .metric-card { padding: 1.15rem 1.25rem; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; background: rgba(255,255,255,.05); backdrop-filter: blur(10px); transition: transform .25s ease; }
+    .metric-card:hover { transform: translateY(-5px); }
+    .metric-value { font-size: 2rem; font-weight: 900; color: #efefef; }
+    .metric-label { font-size: .95rem; color: var(--grey); margin-top: 0.3rem; }
+
+    .process-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1rem; margin-top: 1.7rem; }
+    .process-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 1.35rem; transition: transform .25s ease, border-color .25s ease; }
+    .process-card:hover { transform: translateY(-6px); border-color: rgba(124,231,255,.7); box-shadow: 0 18px 36px rgba(0,0,0,.24); }
+    .process-card h4 { margin: 0.7rem 0 0.3rem; letter-spacing: .03em; }
+    .process-card p { margin:0; color: var(--grey); font-size:.95rem; }
+
+    .features { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1rem; margin-top: 1.7rem; }
+    .feature-card { position: relative; padding: 1.1rem; border: 1px solid rgba(255,255,255,.11); border-radius: var(--radius); background: rgba(255,255,255,.05); transition: transform .22s ease, border-color .22s ease; }
+    .feature-card:hover { transform: translateY(-5px); border-color: rgba(29,128,255,.65); }
+    .feature-card h5 { margin: 0.6rem 0 0.3rem; }
+
+    .lead-panel { display: grid; grid-template-columns: 1.55fr 1fr; gap: 1.25rem; align-items: center; margin-top: 2rem; }
+    .lead-form { padding: 1.25rem; border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); background: rgba(255,255,255,.06); backdrop-filter: blur(10px); }
+    .lead-form input, .lead-form select { width: 100%; background: rgba(255,255,255,.08); border: 1px solid rgba(220,220,230,.2); color: var(--white); border-radius: 12px; margin-top: 0.8rem; padding: 0.9rem; }
+    .lead-form .submit { margin-top: 1rem; width: 100%; }
+
+    .faq-grid { margin-top: 2rem; display: grid; gap: 0.9rem; }
+    .faq-item { border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: rgba(255,255,255,.04); }
+    .faq-head { display:flex; justify-content: space-between; align-items:center; padding: 0.95rem 1rem; cursor:pointer; }
+    .faq-head h4 { margin:0; font-size:1rem; }
+    .faq-content { max-height:0; overflow:hidden; transition: max-height .3s ease; padding:0 1rem; }
+    .faq-root.open .faq-content { max-height: 150px; padding: 0.65rem 1rem 1rem; }
+
+    .footer { border-top: 1px solid rgba(255,255,255,.1); padding: 2.5rem 0 3rem; }
+    .footer .grid { display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+    .footer a { color: var(--grey); text-decoration:none; font-size: .95rem; }
+    .footer small { color: #8d90a0; }
+
+    @media (max-width: 1024px) {
+      .trust-band { flex-direction: column; align-items: flex-start; }
+      .metrics, .process-grid, .features { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .lead-panel { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .hero { padding-top: 3rem; min-height: auto; }
+      .section-title { font-size: 1.8rem; }
+      .cta-group { justify-content: start; }
+      .metrics, .process-grid, .features { grid-template-columns: 1fr; }
+      .logo-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="float-bg"></div>
+
+  <nav style="position: fixed; top: 0; width: 100%; z-index: 10; background: rgba(11,11,14,0.72); border-bottom: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px);">
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.7rem 0;">
+      <a href="#" style="color: var(--white); text-decoration: none; font-weight: 700; letter-spacing: 0.1em;">EIC</a>
+      <div style="display: flex; gap: 0.9rem;">
+        <a class="nav-link" href="#trust" style="font-size:0.9rem; color: var(--light-grey); text-decoration:none;">Trust</a>
+        <a class="nav-link" href="#process" style="font-size:0.9rem; color: var(--light-grey); text-decoration:none;">How it Works</a>
+        <a class="nav-link" href="#features" style="font-size:0.9rem; color: var(--light-grey); text-decoration:none;">Features</a>
+        <a class="nav-link" href="#pilot" style="font-size:0.9rem; color: var(--light-grey); text-decoration:none;">Pilot</a>
+        <a class="nav-link" href="#faq" style="font-size:0.9rem; color: var(--light-grey); text-decoration:none;">FAQ</a>
+        <a class="nav-link" href="demo.html" style="font-size:0.9rem; color: var(--light-grey); text-decoration:none;">Book demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" style="padding-top: 5rem;">
+    <div class="container hero-content">
+      <p style="text-transform: uppercase; color: var(--accent); font-weight:700; letter-spacing:0.15em; font-size:0.9rem;">EIC ENTERPRISE</p>
+      <h1>Enterprise intelligence that identifies risk, acts instantly, and locks your execution flywheel.</h1>
+      <p>Unified operations data, AI-driven insights, and compliance workflow orchestration built for global CxOs. Scale faster with precision-risk control and measurable savings.</p>
+      <div class="cta-group">
+        <button id="demoBtn" class="btn primary">Schedule Live Demo</button>
+        <button class="btn secondary" onclick="document.getElementById('pilot').scrollIntoView({ behavior: 'smooth' })">View Platform Tour</button>
+      </div>
+      <div class="trust-band">
+        <span>Trusted by 180+ global enterprises</span>
+        <div class="logo-grid">
+          <span>Finscope</span><span>NextGen</span><span>Archtech</span><span>Quadra</span><span>Horizon</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="trust" class="container">
+    <div><h2 class="section-title">Operational performance with hard ROI</h2><p class="subtext">EIC unifies risk and value data through a single enterprise intelligence layer. Your team gets decision-grade clarity and compliance coverage in one secure workflow.</p></div>
+    <div class="metrics">
+      <div class="metric-card"><div class="metric-value" data-target="42">0</div><div class="metric-label">% Average risk reduction</div></div>
+      <div class="metric-card"><div class="metric-value" data-target="7">0</div><div class="metric-label">Months payback (average)</div></div>
+      <div class="metric-card"><div class="metric-value" data-target="360">0</div><div class="metric-label">Global programs supported</div></div>
+      <div class="metric-card"><div class="metric-value" data-target="95">0</div><div class="metric-label">SLA fulfillment rate</div></div>
+    </div>
+  </section>
+
+  <section id="process" class="container">
+    <h2 class="section-title">How EIC works</h2>
+    <p class="subtext">A 4-step operational engine that integrates data ingestion, AI forecasting, and workflow activation for enterprise-grade execution.</p>
+    <div class="process-grid">
+      <div class="process-card"><h4>1. Ingest & normalize</h4><p>Automatically harmonize streams across ERP, ITSM, and finance systems into one curated intelligence graph.</p></div>
+      <div class="process-card"><h4>2. AI risk modeling</h4><p>Dynamic risk scoring powered by anomaly networks and decision graph simulation in real-time.</p></div>
+      <div class="process-card"><h4>3. Orchestrate & act</h4><p>Trigger process playbooks, notifications, and remediation workflows with granular control and compliance checks.</p></div>
+      <div class="process-card"><h4>4. Predict & optimize</h4><p>Continuous are-first learning identifies systemic opportunity and loss vectors for the executive operating model.</p></div>
+    </div>
+  </section>
+
+  <section id="features" class="container">
+    <h2 class="section-title">Outcomes that matter</h2>
+    <p class="subtext">Designed for C-suite adoption and large program acceleration—built with audit-grade visibility and scalable governance.</p>
+    <div class="features">
+      <div class="feature-card"><h5>Unified data fabric</h5><p>One canonical source across 300+ enterprise data types for consistent decision trust.</p></div>
+      <div class="feature-card"><h5>Adaptive anomaly detection</h5><p>Real-time patterns surfaced with stakeholders, powered by proprietary risk vector models.</p></div>
+      <div class="feature-card"><h5>Governance automation</h5><p>100+ policy rules, automated evidence collection and audit-ready reporting in one click.</p></div>
+      <div class="feature-card"><h5>Collaborative war room</h5><p>Live incident coordination with role-based action boards and cross-team playbooks.</p></div>
+    </div>
+  </section>
+
+  <section id="pilot" class="container">
+    <h2 class="section-title">Your pilot in 30 days</h2>
+    <p class="subtext">Start with a focused POC, measure net-impact, then hard-roll to enterprise scale with managed support.</p>
+    <div class="lead-panel">
+      <div class="glass-strong" style="padding:1.5rem; border:1px solid rgba(255,255,255,0.1);">
+        <h3 style="margin:0 0 0.75rem;">Get the custom ROI plan</h3>
+        <p style="margin:0; color: var(--grey);">Fill out the pilot request to get a tailored estimate and onboarding roadmap.</p>
+        <div style="display:flex; gap:0.5rem; margin-top:0.9rem; flex-wrap:wrap;"><span style="background:rgba(124,231,255,.12);padding:.45rem .8rem;border-radius:999px;font-size:.8rem;">SOC 2</span><span style="background:rgba(124,231,255,.12);padding:.45rem .8rem;border-radius:999px;font-size:.8rem;">ISO 27001</span><span style="background:rgba(124,231,255,.12);padding:.45rem .8rem;border-radius:999px;font-size:.8rem;">GDPR</span></div>
+      </div>
+      <form class="lead-form" id="leadForm" onsubmit="event.preventDefault(); handleLeadSubmit();">
+        <label>Work email</label><input id="email" type="email" placeholder="name@company.com" required />
+        <label>Company name</label><input id="company" type="text" placeholder="Your organization" required />
+        <label>Team size</label>
+        <select id="teamSize" required><option value="">Select</option><option>1-50</option><option>51-200</option><option>201-1000</option><option>1000+</option></select>
+        <button type="submit" class="btn primary submit">Request demo & ROI</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="faq" class="container">
+    <h2 class="section-title">Got Questions?</h2>
+    <p class="subtext">Frequently asked questions from enterprise stakeholders about deployment, security, and ROI.</p>
+    <div class="faq-grid">
+      <div class="faq-item faq-root"><div class="faq-head"><h4>How fast is the onboarding timeline?</h4><span>▾</span></div><div class="faq-content"><p>90-day board-level deployment for initial program with immediate value milestones in 30 days.</p></div></div>
+      <div class="faq-item faq-root"><div class="faq-head"><h4>What integrations are supported?</h4><span>▾</span></div><div class="faq-content"><p>Native connectors to SAP, Oracle, ServiceNow, Jira, Workday, Tableau plus API-first for custom data sources.</p></div></div>
+      <div class="faq-item faq-root"><div class="faq-head"><h4>How is data security handled?</h4><span>▾</span></div><div class="faq-content"><p>Encrypted in transit and at rest, role-based data access, compliance logging, and continuous monitoring with SOC2 controls.</p></div></div>
+      <div class="faq-item faq-root"><div class="faq-head"><h4>Can I self-host?</h4><span>▾</span></div><div class="faq-content"><p>Yes. On-prem or private cloud deployment with hybrid connectivity options for zero-trust enterprises.</p></div></div>
+      <div class="faq-item faq-root"><div class="faq-head"><h4>What ROI benchmarks should I expect?</h4><span>▾</span></div><div class="faq-content"><p>Baseline benchmark is 30-50% reduction in high-risk event cost, 25% execution speed improvement, and 18% operational efficiency gains.</p></div></div>
+    </div>
+  </section>
+
+  <footer class="container footer">
+    <div class="grid"><div><p style="margin:0 0 0.35rem; font-weight:700;">EIC Enterprise</p><small>Elite operations intelligence platform</small></div><div><a href="#">Privacy</a><a href="#" style="margin-left:1rem;">Terms</a></div><div><a class="btn secondary" style="padding:.7rem 1.1rem;">Book CISO Intro</a></div></div>
+    <p style="margin-top:1rem; color: var(--grey); font-size: .85rem;">© 2026 EIC Enterprise. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-head').forEach((head) => {
+      head.addEventListener('click', () => {
+        const root = head.closest('.faq-root');
+        root.classList.toggle('open');
+      });
+    });
+
+    function animateMetrics() {
+      document.querySelectorAll('.metric-value').forEach(el => {
+        const target = +el.getAttribute('data-target');
+        let value = 0;
+        const step = Math.ceil(target / 120);
+        const interval = setInterval(() => {
+          value += step;
+          if (value >= target) {
+            value = target;
+            clearInterval(interval);
+          }
+          el.textContent = value + (target >= 100 ? '+' : '');
+        }, 14);
+      });
+    }
+
+    const metricsObserver = new IntersectionObserver((items) => {
+      items.forEach(item => {
+        if (item.isIntersecting) {
+          animateMetrics();
+          metricsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    metricsObserver.observe(document.querySelector('.metrics'));
+
+    function handleLeadSubmit() {
+      const email = document.getElementById('email').value;
+      const company = document.getElementById('company').value;
+      const teamSize = document.getElementById('teamSize').value;
+      alert(`Demo request sent:\n${email}\n${company}\n${teamSize}`);
+      document.getElementById('leadForm').reset();
+    }
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    function updateActiveLink() {
+      const fromTop = window.scrollY + 100;
+      navLinks.forEach(link => {
+        const section = document.querySelector(link.hash);
+        if (!section) return;
+        const offset = section.offsetTop;
+        const height = section.offsetHeight;
+        if (fromTop >= offset && fromTop < offset + height) {
+          link.style.color = '#ffffff';
+          link.style.fontWeight = '700';
+        } else {
+          link.style.color = 'var(--light-grey)';
+          link.style.fontWeight = '400';
+        }
+      });
+    }
+    document.getElementById('demoBtn').addEventListener('click', () => {
+      window.location.href = 'demo.html';
+    });
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EIC Enterprise Demo Request</title>
+  <style>
+    :root { --bg: #0b0b0e; --text:#f6f6f8; --accent:#7ce7ff; --accent-strong:#1d80ff; --surface:rgba(20,20,28,.8); --radius:14px; }
+    *{box-sizing:border-box;}
+    body{margin:0;background:radial-gradient(circle at 20% 20%, #23242b 0%, #0b0b0e 45%, #050509 100%);color:var(--text);font-family:'Inter',sans-serif;}
+    .container{width:min(1000px,calc(100%-2rem));margin:0 auto;padding:3rem 0;}
+    .card{background:var(--surface);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);backdrop-filter:blur(10px);padding:2rem;box-shadow:0 14px 40px rgba(0,0,0,.35);}
+    h1{margin:0 0 1rem;font-size:clamp(2rem,4vw,2.6rem);}
+    p{color:#b3b8c6;line-height:1.6;}
+    label{display:block;margin-top:1rem;color:#d5d9e4;font-weight:600;}
+    input,textarea,select{width:100%;border:1px solid rgba(187,190,203,.35);background:rgba(255,255,255,.08);color:#f3f6ff;padding:.85rem 1rem;border-radius:10px;margin-top:.4rem;}
+    button{margin-top:1.3rem;padding:.75rem 1.1rem;border:none;border-radius:999px;background:linear-gradient(120deg,var(--accent),var(--accent-strong));color:#0b0b0e;font-weight:700;cursor:pointer;}
+    .top-nav{padding:1rem;position:sticky;top:0;background:rgba(11,11,14,.8);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;}
+    .top-nav a{color:var(--text);text-decoration:none;font-weight:700;}
+  </style>
+</head>
+<body>
+  <div class="top-nav"><a href="index.html">← Back</a><span>Demo request form</span><a href="index.html">Home</a></div>
+  <main class="container">
+    <div class="card">
+      <h1>Request your EIC Enterprise demo</h1>
+      <p>Book a dedicated session with our solutions team and receive a tailored ROI playbook, integration plan, and implementation roadmap.</p>
+      <form onsubmit="event.preventDefault(); alert('Demo request submitted successfully'); this.reset();">
+        <label>Full name</label><input required type="text" placeholder="Jane Doe" />
+        <label>Work email</label><input required type="email" placeholder="jane@company.com" />
+        <label>Company</label><input required type="text" placeholder="Company Name" />
+        <label>Primary challenge</label>
+        <select required><option value="">Select a challenge</option><option>Operational risk visibility</option><option>Compliance automation</option><option>Execution governance</option><option>Data consolidation</option></select>
+        <label>Message (optional)</label><textarea rows="4" placeholder="Add context for the demo team"></textarea>
+        <button type="submit">Submit demo request</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
